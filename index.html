@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>中醫嘉年華｜體質探索站 V8.1 正式版</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <section id="home" class="screen posterHome">
+      <div class="posterWrap">
+        <img class="posterImg" src="assets/cover-forest-mobile.png" alt="中醫嘉年華體質探索站封面" />
+        <div class="posterActions">
+          <button class="posterBtn" onclick="go('gender')">開始體質測驗</button>
+          <button class="posterSubBtn" onclick="go('about')">關於中醫體質</button>
+          <div class="posterNote">本測驗為健康促進與衛教參考，非醫療診斷。<br />三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="screen hidden">
+      <div class="card">
+        <div class="center"><span class="leafTitle">體質探索森林</span></div>
+        <h1>關於中醫體質</h1>
+        <ul class="aboutList">
+          <li>中醫體質可作為了解個人健康狀態與日常養生方向的參考。</li>
+          <li>本活動分為第一階段 16 題初步評估，以及第二階段體質問卷。</li>
+          <li>第一階段每一種體質的兩題相加達 5 分以上，系統會帶您完成該體質第二階段問卷。</li>
+          <li>結果可能出現一種或多種體質，請依衛教建議作為生活調整參考。</li>
+        </ul>
+        <button class="btn" onclick="go('gender')">開始探索</button>
+        <button class="btn secondary" style="margin-top:10px" onclick="go('home')">回到首頁</button>
+      </div>
+      <div class="footer">三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+    </section>
+
+    <section id="gender" class="screen hidden">
+      <div class="card center">
+        <span class="leafTitle">第一步</span>
+        <h1>請選擇性別</h1>
+        <p class="small">系統會依性別自動調整部分題目。所有資料僅供現場衛教參考。</p>
+        <div class="choiceGrid">
+          <div class="choice" onclick="selectGender('female',this)"><span class="emoji">🌷</span>女性</div>
+          <div class="choice" onclick="selectGender('male',this)"><span class="emoji">🌿</span>男性</div>
+        </div>
+        <button id="genderNext" class="btn" disabled style="margin-top:18px" onclick="startStage1()">下一步</button>
+        <button class="btn secondary" style="margin-top:10px" onclick="go('home')">回首頁</button>
+      </div>
+      <div class="footer">三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+    </section>
+
+    <section id="question" class="screen hidden">
+      <div class="stepper">
+        <div id="s1" class="step active">1</div>
+        <div id="s2" class="step">2</div>
+        <div id="s3" class="step">3</div>
+        <div id="s4" class="step">4</div>
+        <div id="s5" class="step">5</div>
+      </div>
+      <div class="card">
+        <div class="questionMeta" id="qMeta"></div>
+        <div class="progress"><div id="progressBar" class="bar"></div></div>
+        <div class="questionText" id="qText"></div>
+        <div class="mascot"><img id="qImg" src="" alt="體質動物" /></div>
+        <div class="scale" id="scaleBtns"></div>
+        <div class="row">
+          <button class="btn secondary" onclick="prevQ()">上一題</button>
+          <button id="nextBtn" class="btn" onclick="nextQ()">下一題</button>
+        </div>
+        <button class="btn ghost" style="margin-top:10px" onclick="restart()">重新開始</button>
+      </div>
+      <div class="footer">三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+    </section>
+
+    <section id="stage1Result" class="screen hidden">
+      <div class="card center">
+        <span class="leafTitle">初步評估完成</span>
+        <h1>即將進入第二階段</h1>
+        <p id="stage1Conclusion" class="subtitle"></p>
+        <div id="scoreTable"></div>
+        <p class="small">第一階段每一種體質的兩題加總達 5 分以上，會進入該體質第二階段；若皆未達 5 分，將直接進入平和體質問卷。</p>
+        <button class="btn" onclick="startStage2()">開始第二階段</button>
+      </div>
+      <div class="footer">三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+    </section>
+
+    <section id="final" class="screen hidden">
+      <div class="resultCard" id="saveArea">
+        <span class="leafTitle">體質探索結果</span>
+        <div class="resultHero"><img id="finalImg" src="" alt="主要體質動物" /></div>
+        <div class="soft">您的主要體質為</div>
+        <div id="finalTitle" class="resultName"></div>
+        <div class="scoreBox">
+          <div class="scoreItem">體質分數<br /><b id="finalScore"></b></div>
+          <div class="scoreItem">判定結果<br /><b id="finalJudge"></b></div>
+        </div>
+        <div id="finalAdvice" class="advice"></div>
+        <div id="multiResults" class="multiGrid" style="margin-top:14px"></div>
+      </div>
+      <button class="btn" onclick="saveResult()">儲存結果 PNG</button>
+      <button class="btn secondary" onclick="toggleDetails()">查看完整分數</button>
+      <div id="finalDetails" class="card hidden"></div>
+      <button class="btn ghost" onclick="restart()">重新檢測</button>
+      <div class="footer">三義慈濟中醫醫院／健康臺灣深耕計畫</div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
